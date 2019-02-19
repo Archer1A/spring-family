@@ -1,6 +1,9 @@
 package com.vic.design.control;
 
+import com.vic.design.model.Role;
 import com.vic.design.service.*;
+import com.vic.design.service.impl.*;
+import com.vic.design.util.ProxyBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +36,18 @@ public class ProxyModeControl {
         productList.addObserver(new JingDongObserver());
         productList.addProduct("新产品1");
         return "observer";
+    }
+
+    @RequestMapping("/role")
+    public String getRoleService() {
+        RoleService proxy = ProxyBeanFactory.getBean(new RoleServiceImpl(), new RoleInterceptor());
+        Role role = new Role();
+        role.roleName = "经理";
+        proxy.printRole(role);
+        System.out.println("-----------------------------");
+        role = null;
+        proxy.printRole(role);
+        return "Role";
     }
 
 }

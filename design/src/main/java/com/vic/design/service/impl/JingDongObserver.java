@@ -1,4 +1,4 @@
-package com.vic.design.service;
+package com.vic.design.service.impl;
 
 import java.util.Observable;
 import java.util.Observer;

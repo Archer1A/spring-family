@@ -14,6 +14,9 @@ public class ProxyModeControl {
     @Autowired
     DynamicProxy dynamicProxy;
 
+    @Autowired
+    RoleService roleService;
+
     @RequestMapping("/dynamicProxy")
     public String dynamicProxyControl() {
         HelloWorld proxy = (HelloWorld) dynamicProxy.bind(new HelloWorldImpl());
@@ -40,13 +43,15 @@ public class ProxyModeControl {
 
     @RequestMapping("/role")
     public String getRoleService() {
-        RoleService proxy = ProxyBeanFactory.getBean(new RoleServiceImpl(), new RoleInterceptor());
+//        RoleService proxy = ProxyBeanFactory.getBean(new RoleServiceImpl(), new RoleInterceptor());
         Role role = new Role();
         role.roleName = "经理";
-        proxy.printRole(role);
-        System.out.println("-----------------------------");
-        role = null;
-        proxy.printRole(role);
+//        proxy.printRole(role);
+//        System.out.println("-----------------------------");
+//        role = null;
+//        proxy.printRole(role);
+
+        roleService.printRole(role);
         return "Role";
     }
 

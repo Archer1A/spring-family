@@ -10,5 +10,5 @@ import com.vic.design.model.Role;
  */
 public interface RoleService {
 
-    void printRole(Role role);
+    void printRole(Role role,int sort);
 }

@@ -1,6 +1,8 @@
 package com.vic.design.util;
 
 import com.vic.design.model.Role;
+import com.vic.design.service.RoleVerifier;
+import com.vic.design.service.impl.RoleVerifierImpl;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -51,4 +53,8 @@ public class RoleAspect {
         System.out.println("around after.....");
 
     }
+
+    @DeclareParents(value = "com.vic.design.service.impl.RoleVerifierImpl+",
+    defaultImpl = RoleVerifierImpl.class)
+    public RoleVerifier roleVerifier;
 }

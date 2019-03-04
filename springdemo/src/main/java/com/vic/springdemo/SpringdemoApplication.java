@@ -72,7 +72,7 @@ public class SpringdemoApplication  implements CommandLineRunner {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                jdbcTemplate.execute("insert into  t_user(id,name,phone) values (3,vic,15088777251)");
+                jdbcTemplate.execute("insert into  t_user(id,phone,tname) values (3,15088777251,\"vic\")");
                 log.info("COUNT IN TRANSACTION : {}",getCount());
                 transactionStatus.setRollbackOnly();
             }

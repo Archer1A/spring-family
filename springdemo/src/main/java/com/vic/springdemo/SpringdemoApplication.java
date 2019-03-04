@@ -8,6 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -25,6 +28,9 @@ public class SpringdemoApplication  implements CommandLineRunner {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    TransactionTemplate transactionTemplate;
+
 
     public static void main(String[] args) {
         SpringApplication.run(SpringdemoApplication.class, args);
@@ -32,8 +38,9 @@ public class SpringdemoApplication  implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        showConnection();
-        showData();
+//        showConnection();
+//        showData();
+        transactionDemo();
     }
 
     private void showConnection() throws SQLException {
@@ -58,5 +65,22 @@ public class SpringdemoApplication  implements CommandLineRunner {
             }
         });
         users.forEach(user -> log.info("user: {}",user));
+    }
+
+    private void transactionDemo() {
+        log.info("COUNT BEFORE TRANSACTION :{}",getCount());
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                jdbcTemplate.execute("insert into  t_user(id,name,phone) values (3,vic,15088777251)");
+                log.info("COUNT IN TRANSACTION : {}",getCount());
+                transactionStatus.setRollbackOnly();
+            }
+        });
+        log.info("COUNT AFTER TRANSACTION : {}",getCount());
+    }
+
+    private long getCount() {
+        return jdbcTemplate.queryForObject("select count(*) as cnt from t_user ",long.class);
     }
 }

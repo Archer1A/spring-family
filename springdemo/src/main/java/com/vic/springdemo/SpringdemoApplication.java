@@ -81,6 +81,7 @@ public class SpringdemoApplication  implements CommandLineRunner {
     }
 
     private long getCount() {
+
         return jdbcTemplate.queryForObject("select count(*) as cnt from t_user ",long.class);
     }
 }

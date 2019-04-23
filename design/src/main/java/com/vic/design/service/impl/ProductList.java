@@ -11,7 +11,10 @@ public class ProductList extends Observable {
 
     private static ProductList instance;
 
-    private ProductList(){};
+    private ProductList() {
+    }
+
+    ;
 
     public static ProductList getInstance() {
         if (instance == null) {
@@ -23,10 +26,11 @@ public class ProductList extends Observable {
 
     /**
      * 增加观察者
+     *
      * @param observer
      */
     public void addProductListObserver(Observer observer) {
-        
+
         this.addObserver(observer);
     }
 

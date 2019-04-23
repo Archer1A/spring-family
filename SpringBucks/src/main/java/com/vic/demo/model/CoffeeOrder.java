@@ -31,5 +31,4 @@ public class CoffeeOrder extends BaseEntity implements Serializable {
     private OrderState state;
 
 
-
 }

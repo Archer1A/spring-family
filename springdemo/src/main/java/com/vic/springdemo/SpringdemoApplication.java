@@ -20,7 +20,7 @@ import java.util.List;
 
 @SpringBootApplication
 @Slf4j
-public class SpringdemoApplication  implements CommandLineRunner {
+public class SpringdemoApplication implements CommandLineRunner {
 
     @Autowired
     private DataSource dataSource;
@@ -52,10 +52,10 @@ public class SpringdemoApplication  implements CommandLineRunner {
     }
 
     private void showData() {
-        jdbcTemplate.queryForList("select name from t_user").forEach(row ->log.info(row.toString()));
+        jdbcTemplate.queryForList("select name from t_user").forEach(row -> log.info(row.toString()));
         log.info(dataSource.toString());
-        log.info("Count {}", jdbcTemplate.queryForObject("select count(*) from t_user",Long.class));
-        List<User>  users = jdbcTemplate.query("select * from t_user", new RowMapper<User>() {
+        log.info("Count {}", jdbcTemplate.queryForObject("select count(*) from t_user", Long.class));
+        List<User> users = jdbcTemplate.query("select * from t_user", new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
                 return User.builder()
@@ -64,24 +64,24 @@ public class SpringdemoApplication  implements CommandLineRunner {
                         .phone(resultSet.getString(3)).build();
             }
         });
-        users.forEach(user -> log.info("user: {}",user));
+        users.forEach(user -> log.info("user: {}", user));
     }
 
     private void transactionDemo() {
-        log.info("COUNT BEFORE TRANSACTION :{}",getCount());
+        log.info("COUNT BEFORE TRANSACTION :{}", getCount());
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 jdbcTemplate.execute("insert into  t_user(id,phone,tname) values (3,15088777251,\"vic\")");
-                log.info("COUNT IN TRANSACTION : {}",getCount());
+                log.info("COUNT IN TRANSACTION : {}", getCount());
                 transactionStatus.setRollbackOnly();
             }
         });
-        log.info("COUNT AFTER TRANSACTION : {}",getCount());
+        log.info("COUNT AFTER TRANSACTION : {}", getCount());
     }
 
     private long getCount() {
 
-        return jdbcTemplate.queryForObject("select count(*) as cnt from t_user ",long.class);
+        return jdbcTemplate.queryForObject("select count(*) as cnt from t_user ", long.class);
     }
 }

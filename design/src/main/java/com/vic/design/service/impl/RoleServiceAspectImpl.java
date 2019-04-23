@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class RoleServiceAspectImpl implements RoleService {
 
     @Override
-    public void printRole(Role role,int sort) {
-        System.out.println( role.toString());
+    public void printRole(Role role, int sort) {
+        System.out.println(role.toString());
     }
 }

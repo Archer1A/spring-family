@@ -7,5 +7,5 @@ package com.vic.springdemo.repository;
  * @author Vic
  * @date 2019/3/9
  */
-public class CoffeeOrderRepository  {
+public class CoffeeOrderRepository {
 }

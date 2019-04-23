@@ -21,9 +21,10 @@ public class RoleAspect {
     public void print() {
 
     }
-    @Before("execution(* com.vic.design.service.impl..*(..))"+
-    "&& args(role,sort)")
-    public void before(Role role,int sort) {
+
+    @Before("execution(* com.vic.design.service.impl..*(..))" +
+            "&& args(role,sort)")
+    public void before(Role role, int sort) {
         System.out.println("before......." + role.roleName);
     }
 
@@ -55,6 +56,6 @@ public class RoleAspect {
     }
 
     @DeclareParents(value = "com.vic.design.service.impl.RoleVerifierImpl+",
-    defaultImpl = RoleVerifierImpl.class)
+            defaultImpl = RoleVerifierImpl.class)
     public RoleVerifier roleVerifier;
 }

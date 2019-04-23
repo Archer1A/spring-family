@@ -11,7 +11,7 @@ import com.vic.design.service.RoleService;
  */
 public class RoleServiceImpl implements RoleService {
     @Override
-    public void printRole(Role role,int sort) {
-        System.out.println( role.toString());
+    public void printRole(Role role, int sort) {
+        System.out.println(role.toString());
     }
 }

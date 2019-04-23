@@ -35,7 +35,7 @@ public class ProxyModeControl {
 
     @RequestMapping("/testObserver")
     public String testObserver() {
-        ProductList productList  = ProductList.getInstance();
+        ProductList productList = ProductList.getInstance();
         productList.addObserver(new JingDongObserver());
         productList.addProduct("新产品1");
         return "observer";
@@ -45,7 +45,7 @@ public class ProxyModeControl {
     public String getRoleService() {
         int temp1 = 50;
         int temp2 = 100;
-        int temp3 = temp1 +temp2;
+        int temp3 = temp1 + temp2;
 //        RoleService proxy = ProxyBeanFactory.getBean(new RoleServiceImpl(), new RoleInterceptor());
         Role role = new Role();
         role.roleName = "经理";
@@ -54,7 +54,7 @@ public class ProxyModeControl {
 //        role = null;
 //        proxy.printRole(role);
 
-        roleService.printRole(role,1);
+        roleService.printRole(role, 1);
         return "Role";
     }
 

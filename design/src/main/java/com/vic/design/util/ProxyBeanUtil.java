@@ -21,7 +21,7 @@ public class ProxyBeanUtil implements InvocationHandler {
         ProxyBeanUtil _this = new ProxyBeanUtil();
         _this.obj = obj;
         _this.interceptor = interceptor;
-        return Proxy.newProxyInstance(obj.getClass().getClassLoader(),obj.getClass().getInterfaces(),_this);
+        return Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(), _this);
 
 
     }
@@ -35,7 +35,7 @@ public class ProxyBeanUtil implements InvocationHandler {
             ret = method.invoke(obj, args);
         } catch (Exception ex) {
             exceptionFlag = true;
-        }finally {
+        } finally {
             interceptor.after(obj);
         }
         if (exceptionFlag) {

@@ -7,5 +7,5 @@ package com.vic.demo.model;
  * @date 2019/3/9
  */
 public enum OrderState {
-    INIT,PAID,BREWED,TAKEN,CALCELLED;
+    INIT, PAID, BREWED, TAKEN, CALCELLED;
 }

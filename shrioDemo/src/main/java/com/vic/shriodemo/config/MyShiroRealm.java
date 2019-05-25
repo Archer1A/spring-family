@@ -17,6 +17,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -79,7 +80,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         List<SysRole> roles = userInfoService.getRoleByUserId(userInfo.getUserId());
         userInfo.setRoles(new HashSet<>(roles));
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userInfo, userInfo.getPassword(), getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userInfo, userInfo.getPassword(), ByteSource.Util.bytes(userInfo.getSalt()),getName());
+
        // userInfo.setPassword(null);
        // SecurityUtils.getSubject().getSession().setAttribute("userInfo", JSON.toJSONString(userInfo));
         return authenticationInfo;

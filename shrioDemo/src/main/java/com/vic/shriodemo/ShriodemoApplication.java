@@ -8,6 +8,8 @@ import com.vic.shriodemo.service.UserInfoService;
 import com.vic.shriodemo.service.impl.PermissionServiceImpl;
 import com.vic.shriodemo.service.impl.UserInfoServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -40,7 +42,10 @@ public class ShriodemoApplication  implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        UserInfo user = userInfoService.getUserInfo("zhangsan");
+
+        log.info("password>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+getPassword("123456"));
+
+        /*UserInfo user = userInfoService.getUserInfo("zhangsan");
 
         List<SysRole> roles = userInfoService.getRoleByUserId(user.getUserId());
         Set<String> roleSet = roles.stream().map(SysRole::getRoleName).collect(Collectors.toSet());
@@ -50,7 +55,18 @@ public class ShriodemoApplication  implements ApplicationRunner {
             role.setPermissions(new HashSet<>(sysPermissions));
         }
         user.setRoles(new HashSet<>(roles));
-        log.info(user.toString());
+        log.info(user.toString());*/
+
+    }
+
+    // 获取加密后的密码
+    public String getPassword(String password) {
+
+        String hashAlgorithmName = "md5";
+        int  hashIteration = 2;
+        ByteSource salt = ByteSource.Util.bytes("2");
+        String pwd = new SimpleHash(hashAlgorithmName, password, salt, hashIteration).toString();
+        return pwd;
 
     }
 }

@@ -25,7 +25,7 @@ public class UserInfo {
 
     private String password;
 
-    private int salt;
+    private String salt;
 
     private Set<SysRole> roles = new HashSet<>();
 

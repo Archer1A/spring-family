@@ -19,7 +19,9 @@ public interface UserMapper {
     @Results({
             @Result(property = "userId",column = "user_id"),
             @Result(property = "userName",column = "user_name"),
-            @Result(property = "fullName",column = "full_name")}
+            @Result(property = "fullName",column = "full_name"),
+            @Result(property = "salt",column = "salt")}
+
             )
     UserInfo findUserByUserName(String userName);
 }

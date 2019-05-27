@@ -31,8 +31,6 @@ public class LoginController {
         } catch (Exception ex) {
             return "fail";
         }
-
-
         return "success";
     }
 

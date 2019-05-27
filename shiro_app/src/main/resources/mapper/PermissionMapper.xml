@@ -17,5 +17,9 @@
         SELECT  * from sys_permission where parent_id = #{parentId}
     </select>
 
+    <select id="getPermissionByRoleId" parameterType="integer" resultMap="SysPermission">
+        SELECT sp.* from sys_permission sp RIGHT  JOIN sys_role_permission srp ON srp.role_id =  #{roleId} WHERE srp.permission_id = sp.id
+    </select>
+
 
 </mapper>

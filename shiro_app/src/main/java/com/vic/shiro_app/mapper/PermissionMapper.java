@@ -18,4 +18,7 @@ public interface PermissionMapper {
 
     List<SysPermission> getPermissionsByParentId(int parentId);
 
+    List<SysPermission> getPermissionByRoleId(int roleId);
+
+
 }

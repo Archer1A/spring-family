@@ -12,7 +12,6 @@ import java.util.List;
  * @date 2019/5/27
  */
 public class UserServiceImpl implements UserService {
-
     @Override
     public List<SysUser> getAllUsers() {
         return null;

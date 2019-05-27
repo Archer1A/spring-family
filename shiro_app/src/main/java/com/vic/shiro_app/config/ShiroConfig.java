@@ -18,6 +18,7 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+    // 配置shiro过滤
     @Bean( name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -49,10 +50,15 @@ public class ShiroConfig {
     @Bean
     public MyRealm myRealm() {
         MyRealm myRealm = new MyRealm();
+        //添加凭证比较器
         myRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myRealm;
     }
 
+    /**
+     * 启用web拦截
+     * @return
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
 
@@ -62,6 +68,10 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+    /**
+     * 使用hash 加密密码
+     * @return
+     */
     @Bean(name = "credentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();

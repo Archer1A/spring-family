@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Service
 public interface UserService {
+
     List<SysUser> getAllUsers();
 
     SysUser getUserByUserName(String userName);

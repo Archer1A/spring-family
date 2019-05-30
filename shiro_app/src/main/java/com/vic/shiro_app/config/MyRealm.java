@@ -1,5 +1,6 @@
 package com.vic.shiro_app.config;
 
+import com.vic.shiro_app.mapper.UserMapper;
 import com.vic.shiro_app.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,6 +12,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +25,9 @@ import java.util.Set;
  */
 @Slf4j
 public class MyRealm extends AuthorizingRealm {
+
+    @Autowired
+    UserMapper userMapper;
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -41,7 +47,7 @@ public class MyRealm extends AuthorizingRealm {
         log.info("UserName=>>>>>>>>>>>" + userName);
         String password =new String ((char[]) authenticationToken.getCredentials());
         log.info("password=>>>>>>>>>>>" + password);
-        SysUser user = SysUser.builder().userId(1).userName("zhangsan").password("ebec2a46e3a54b78faf9ca2a3f6378b1").salt("2").build();
+        SysUser user = userMapper.getUserByUserName(userName);
         if (null == user) {
             throw new AuthenticationException();
         }

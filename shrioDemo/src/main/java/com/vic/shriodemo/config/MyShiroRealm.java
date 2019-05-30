@@ -80,7 +80,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         List<SysRole> roles = userInfoService.getRoleByUserId(userInfo.getUserId());
         userInfo.setRoles(new HashSet<>(roles));
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userInfo, userInfo.getPassword(), ByteSource.Util.bytes(userInfo.getSalt()),getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo  (userInfo, userInfo.getPassword(), ByteSource.Util.bytes(userInfo.getSalt()),getName());
 
        // userInfo.setPassword(null);
        // SecurityUtils.getSubject().getSession().setAttribute("userInfo", JSON.toJSONString(userInfo));

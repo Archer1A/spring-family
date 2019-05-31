@@ -1,6 +1,10 @@
 package com.vic.shiro_app.config;
 
+import com.vic.shiro_app.mapper.PermissionMapper;
+import com.vic.shiro_app.mapper.RoleMapper;
 import com.vic.shiro_app.mapper.UserMapper;
+import com.vic.shiro_app.model.SysPermission;
+import com.vic.shiro_app.model.SysRole;
 import com.vic.shiro_app.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,7 +19,9 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * MyRealm
@@ -28,13 +34,25 @@ public class MyRealm extends AuthorizingRealm {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    RoleMapper roleMapper;
+
+    @Autowired
+    PermissionMapper permissionMapper;
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         SysUser user = (SysUser) principalCollection.getPrimaryPrincipal();
-        Set<String> permission = new HashSet<>(user.getPermissions());
-        simpleAuthorizationInfo.setStringPermissions(permission);
+        List<SysRole> roleList = roleMapper.getRolesByUserId(user.getUserId());
+        Set<String> permissionsSet = new HashSet<>();
+        for (SysRole sysRole : roleList) {
+            List<SysPermission> permissions = permissionMapper.getPermissionByRoleId(sysRole.getRoleId());
+            permissionsSet.addAll(permissions.stream().map(SysPermission::getPermission).collect(Collectors.toSet()));
+        }
+
+        simpleAuthorizationInfo.setStringPermissions(permissionsSet);
 
         return simpleAuthorizationInfo;
     }

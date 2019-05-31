@@ -1,11 +1,13 @@
 package com.vic.shiro_app.controller;
 
+import com.vic.shiro_app.model.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,9 +24,14 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "this is login page";
+    }
+
     @PostMapping("auth")
-    public String login(){
-        UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "123456");
+    public String login(@RequestBody SysUser sysUser){
+        UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(), sysUser.getPassword());
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);

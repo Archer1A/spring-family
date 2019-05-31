@@ -17,4 +17,6 @@ public interface PermissionService {
     List<SysPermission> getAllPermission();
 
     List<SysPermission> getPermissionsByParentId(int parentId);
+
+    List<SysPermission> getPermissionByRoleId(int roleId);
 }

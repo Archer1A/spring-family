@@ -11,7 +11,6 @@ import java.util.List;
  * @author Vic
  * @date 2019/5/27
  */
-@Service
 public interface UserService {
 
     List<SysUser> getAllUsers();

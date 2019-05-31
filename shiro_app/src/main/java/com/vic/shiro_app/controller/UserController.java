@@ -1,12 +1,13 @@
 package com.vic.shiro_app.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.vic.shiro_app.annotation.LoggingAnnotation;
 import com.vic.shiro_app.model.SysUser;
 import com.vic.shiro_app.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,10 +24,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("systemUserList")
-    public List<SysUser> getAllUsers() {
-        return userService.getAllUsers();
+    @LoggingAnnotation
+    public PageInfo<SysUser> getAllUsers(@RequestParam int pageNum,@RequestParam int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<SysUser> sysUserPageInfo = new PageInfo<>(userService.getAllUsers());
+        return sysUserPageInfo;
     }
 
 }

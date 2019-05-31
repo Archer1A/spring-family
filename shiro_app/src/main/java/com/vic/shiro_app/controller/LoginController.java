@@ -1,5 +1,6 @@
 package com.vic.shiro_app.controller;
 
+import com.vic.shiro_app.annotation.LoggingAnnotation;
 import com.vic.shiro_app.model.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @GetMapping("/index")
+    @LoggingAnnotation()
     public String index() {
         return "index";
     }
@@ -30,6 +32,7 @@ public class LoginController {
     }
 
     @PostMapping("auth")
+    @LoggingAnnotation()
     public String login(@RequestBody SysUser sysUser){
         UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(), sysUser.getPassword());
         Subject subject = SecurityUtils.getSubject();

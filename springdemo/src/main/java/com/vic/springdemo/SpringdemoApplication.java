@@ -1,11 +1,13 @@
 package com.vic.springdemo;
 
+import com.vic.springdemo.aop.MathCalculator;
 import com.vic.springdemo.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.TransactionStatus;
@@ -16,10 +18,12 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
 @Slf4j
+@EnableAspectJAutoProxy
 public class SpringdemoApplication implements CommandLineRunner {
 
     @Autowired
@@ -31,6 +35,11 @@ public class SpringdemoApplication implements CommandLineRunner {
     @Autowired
     TransactionTemplate transactionTemplate;
 
+    @Autowired
+    MyApplicationContext myApplicationContext;
+    @Autowired
+    MathCalculator mathCalculator;
+
 
     public static void main(String[] args) {
         SpringApplication.run(SpringdemoApplication.class, args);
@@ -38,6 +47,10 @@ public class SpringdemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Arrays.stream(myApplicationContext.getApplicationContext().getBeanDefinitionNames()).forEach(System.out::println);
+       // MathCalculator mathCalculator = (MathCalculator) myApplicationContext.getApplicationContext().getBean("mathCalculator");
+
+        mathCalculator.divide(1, 0);
 //        showConnection();
 //        showData();
         transactionDemo();

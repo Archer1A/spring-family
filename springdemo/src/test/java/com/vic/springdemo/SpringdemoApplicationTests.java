@@ -17,9 +17,6 @@ import java.util.Arrays;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class SpringdemoApplicationTests {
-    @Autowired
-    Color color;
-
     /**
      *
      *  org.springframework.aop.config.internalAutoProxyCreator
@@ -44,13 +41,11 @@ public class SpringdemoApplicationTests {
     @Test
     public void contextLoads() throws Exception {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BeanConfig.class);
-        Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
-        System.out.println(color);
-        color = (Color) applicationContext.getBean("color");
-        System.out.println(color);
-        MathCalculator bean = (MathCalculator) applicationContext.getBean("com.vic.springdemo.aop.MathCalculator");
-        bean.divide(1, 1);
-        System.out.println(color);
+        //Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
+        Color color = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
+        Color color2 = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
+        System.out.println("isSingleton ?" + (color ==color2));
+        System.out.println("color is" + color.getColor());
     }
 
 }

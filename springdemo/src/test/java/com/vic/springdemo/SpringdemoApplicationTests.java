@@ -2,6 +2,7 @@ package com.vic.springdemo;
 
 import com.vic.springdemo.aop.MathCalculator;
 import com.vic.springdemo.config.BeanConfig;
+import com.vic.springdemo.importPackage.TestEvent;
 import com.vic.springdemo.model.Color;
 import com.vic.springdemo.model.Red;
 import org.junit.Test;
@@ -12,7 +13,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.annotation.Target;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -42,10 +46,28 @@ public class SpringdemoApplicationTests {
     public void contextLoads() throws Exception {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BeanConfig.class);
         //Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
-        Color color = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
-        Color color2 = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
-        System.out.println("isSingleton ?" + (color ==color2));
-        System.out.println("color is" + color.getColor());
+       // Color color = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
+       // Color color2 = (Color) applicationContext.getBean("com.vic.springdemo.config.ColorFactoryBean");
+        TestEvent testEvent = new TestEvent("hello", "msg");
+        applicationContext.publishEvent(testEvent);
+        MathCalculator mathCalculator = (MathCalculator) applicationContext.getBean("mathCalculator");
+        mathCalculator.divide(1, 1);
+      //  System.out.println("isSingleton ?" + (color ==color2));
+     //   System.out.println("color is" + color.getColor());
+    }
+
+    @Test
+    public void  testComputeIfAbsent() {
+
+        Map<Object, Object> map = new HashMap<>();
+        map.put("a", "a");
+        Object a = map.computeIfAbsent("a", k -> new Object());
+        System.out.println(a);
+        System.out.println(map.get("a"));
+        Object a1 = map.computeIfPresent("a", (c, d) -> c.toString() + d.toString());
+        System.out.println(a1);
+        System.out.println(map.toString());
+
     }
 
 }

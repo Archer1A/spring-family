@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2019/7/15
  */
 public class Color {
-    @Autowired(required = false)
+
     private String color;
 
     public String getColor() {

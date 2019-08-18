@@ -241,13 +241,11 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// 提取对应的beanName
 		final String beanName = transformedBeanName(name);
 		Object bean;
-
 		// Eagerly check singleton cache for manually registered singletons.
 		//检查缓存或实例工厂中是否有对应的实例
 		//因为创建单例bean的时候会存在依赖注入，而在创建依赖的时候为了避免循环依赖
 		//Spring 创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提早曝光
 		// 也就是将ObjectFactory 加入到缓存中，一旦下一个bean创建的时候需要依赖上一个bean则直接使用ObjectFactory
-
 		// 直接尝试从singletonFactories 中的objectFactory中获取
 		Object sharedInstance = getSingleton(beanName);
 
@@ -281,7 +279,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 			// Check if bean definition exists in this factory.
 			BeanFactory parentBeanFactory = getParentBeanFactory();
-			// 如果beanDefinitionMap 中也就是所有已加载的类中不包括beanName 则尝试从parentBeanFactory中监测
+			// 如果beanDefinitionMap 中也就是所有已加载的类中不包括beanName 则尝试从parentBeanFactory中检测
 			if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
 				// Not found -> check parent.
 				String nameToLookup = originalBeanName(name);

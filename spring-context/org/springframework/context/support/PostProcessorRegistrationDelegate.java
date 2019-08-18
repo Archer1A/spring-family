@@ -62,8 +62,9 @@ final class PostProcessorRegistrationDelegate {
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
 			List<BeanDefinitionRegistryPostProcessor> registryProcessors = new ArrayList<>();
-
+			// 硬编码注册的后置处理器
 			for (BeanFactoryPostProcessor postProcessor : beanFactoryPostProcessors) {
+				//BeanDefinitionRegistryPostProcessor在BeanFactoryPostProcessor的基础上还有自己定义的方法需要先调用
 				if (postProcessor instanceof BeanDefinitionRegistryPostProcessor) {
 					BeanDefinitionRegistryPostProcessor registryProcessor =
 							(BeanDefinitionRegistryPostProcessor) postProcessor;
@@ -71,6 +72,7 @@ final class PostProcessorRegistrationDelegate {
 					registryProcessors.add(registryProcessor);
 				}
 				else {
+					// 记录常规的BeanFactoryPostProcessor
 					regularPostProcessors.add(postProcessor);
 				}
 			}
@@ -204,6 +206,8 @@ final class PostProcessorRegistrationDelegate {
 		// a bean is not eligible for getting processed by all BeanPostProcessors.
 		int beanProcessorTargetCount = beanFactory.getBeanPostProcessorCount() + 1 + postProcessorNames.length;
 		//注册一个BeanPostProcessorChecker 来记录info信息 当这个bean在BeanPostProcessor实例化期间被创建
+		//BeanPostProcessorChecker是一个普通的信息打印，可能会有某些情况
+		// 当Spring的配置中的后置处理器还没有被注册就已经开始Bean的初始化时，便会答应出BeanPostProcessorChecker中设定的信息
 		beanFactory.addBeanPostProcessor(new BeanPostProcessorChecker(beanFactory, beanProcessorTargetCount));
 
 		// Separate between BeanPostProcessors that implement PriorityOrdered,
